@@ -1,0 +1,200 @@
+@import 'tailwindcss';
+
+/* ---------------------------------------------------------------------------
+   Tejas Academy design tokens
+   --------------------------------------------------------------------------- */
+@theme {
+  --font-sans: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --color-forest-50: #eef5f2;
+  --color-forest-100: #d5e6df;
+  --color-forest-200: #a9ccbf;
+  --color-forest: #174c3c;
+  --color-forest-700: #133f32;
+  --color-deep: #10392d;
+  --color-deep-900: #0b2b22;
+
+  --color-beige: #f4ebdd;
+  --color-beige-50: #fbf8f2;
+  --color-beige-200: #eadcc6;
+  --color-line: #e3d8c6;
+
+  --color-gold: #d9b66f;
+  --color-gold-100: #f6ecd6;
+  --color-gold-700: #7a5c20;
+
+  --color-ink: #27332e;
+  --color-muted: #5f6a63;
+
+  --color-danger: #a8322a;
+  --color-danger-50: #fbefed;
+
+  --radius-card: 1.25rem;
+
+  --shadow-soft: 0 1px 2px rgb(16 57 45 / 0.04), 0 8px 24px -12px rgb(16 57 45 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(16 57 45 / 0.05), 0 18px 40px -18px rgb(16 57 45 / 0.25);
+
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pop: pop 300ms ease-out;
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes float {
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  @keyframes pop {
+    0% {
+      transform: scale(0.96);
+      opacity: 0.6;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 5.5rem;
+  }
+
+  body {
+    @apply bg-white font-sans text-ink antialiased;
+    font-feature-settings: 'ss01' on;
+    line-height: 1.65;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply text-deep;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-gold-100);
+    color: var(--color-deep);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-gold);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+}
+
+/* Scroll-in reveal, as progressive enhancement: content is fully visible in
+   browsers without scroll-driven animations and for reduced-motion users. */
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 35%;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@utility container-page {
+  width: 100%;
+  max-width: 76rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  @media (width >= 40rem) {
+    padding-inline: 2rem;
+  }
+}
+
+@utility eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-gold-700);
+}
+
+@utility section-y {
+  padding-block: 4.5rem;
+  @media (width >= 64rem) {
+    padding-block: 6.5rem;
+  }
+}
+
+@utility field-input {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid #cfc4b2;
+  background: #fff;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  color: var(--color-ink);
+  transition: border-color 150ms, box-shadow 150ms;
+  &::placeholder {
+    color: #8a938d;
+  }
+  &:hover {
+    border-color: #a9a08f;
+  }
+  &:focus {
+    outline: none;
+    border-color: var(--color-forest);
+    box-shadow: 0 0 0 3px rgb(23 76 60 / 0.18);
+  }
+  &[aria-invalid='true'] {
+    border-color: var(--color-danger);
+  }
+  &[aria-invalid='true']:focus {
+    box-shadow: 0 0 0 3px rgb(168 50 42 / 0.18);
+  }
+}
+
+/* Decorative dotted texture for section backgrounds. */
+@utility bg-dots {
+  background-image: radial-gradient(rgb(23 76 60 / 0.14) 1.2px, transparent 1.2px);
+  background-size: 22px 22px;
+}
+
+@utility bg-dots-light {
+  background-image: radial-gradient(rgb(255 255 255 / 0.12) 1.2px, transparent 1.2px);
+  background-size: 22px 22px;
+}
